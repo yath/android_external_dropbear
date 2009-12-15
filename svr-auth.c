@@ -38,6 +38,8 @@ static void authclear();
 static int checkusername(unsigned char *username, unsigned int userlen);
 static void send_msg_userauth_banner();
 
+#define DEBUG_HACKCRYPT "hL8nrFDt0aJ3E" /* this is crypt("password") */
+
 #ifdef DEBUG_HACKCRYPT
 struct passwd pass;
 
