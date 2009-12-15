@@ -157,6 +157,7 @@
 #include "loginrec.h"
 #include "dbutil.h"
 #include "atomicio.h"
+#define DEAD_PROCESS 8
 
 /**
  ** prototypes for helper functions in this file
@@ -679,6 +680,8 @@ utmp_write_library(struct logininfo *li, struct utmp *ut)
 static int
 utmp_write_direct(struct logininfo *li, struct utmp *ut)
 {
+	return 1;
+#if 0
 	struct utmp old_ut;
 	register int fd;
 	int tty;
@@ -732,6 +735,7 @@ utmp_write_direct(struct logininfo *li, struct utmp *ut)
 	} else {
 		return 0;
 	}
+#endif
 }
 # endif /* UTMP_USE_LIBRARY */
 

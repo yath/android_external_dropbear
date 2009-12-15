@@ -56,7 +56,7 @@
 #define HAVE_BASENAME 1
 
 /* Define to 1 if you have the `clearenv' function. */
-#define HAVE_CLEARENV 1
+/* #define HAVE_CLEARENV 1 */
 
 /* Define if gai_strerror() returns const char * */
 #define HAVE_CONST_GAI_STRERROR_PROTO 1
@@ -98,7 +98,7 @@
 #define HAVE_GETSPNAM 1
 
 /* Define to 1 if you have the `getusershell' function. */
-#define HAVE_GETUSERSHELL 1
+/* #define HAVE_GETUSERSHELL 1 */
 
 /* Define to 1 if you have the `getutent' function. */
 #define HAVE_GETUTENT 1
@@ -143,7 +143,7 @@
 #define HAVE_LIMITS_H 1
 
 /* Have login() function */
-#define HAVE_LOGIN 
+/* #define HAVE_LOGIN  */
 
 /* Define to 1 if you have the `logout' function. */
 #define HAVE_LOGOUT 1
@@ -179,7 +179,7 @@
 #define HAVE_PATHS_H 1
 
 /* Define to 1 if you have the <pty.h> header file. */
-#define HAVE_PTY_H 1
+/* #define HAVE_PTY_H 1 */
 
 /* Define to 1 if you have the `putenv' function. */
 #define HAVE_PUTENV 1
@@ -197,7 +197,7 @@
 #define HAVE_SELECT 1
 
 /* Define to 1 if you have the `setutent' function. */
-#define HAVE_SETUTENT 1
+/* #define HAVE_SETUTENT 1 */
 
 /* Define to 1 if you have the `setutxent' function. */
 #define HAVE_SETUTXENT 1

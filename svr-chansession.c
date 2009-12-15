@@ -868,9 +868,11 @@ static void execchild(void *user_data) {
 		 * usernames with the same uid, but differing groups, then the
 		 * differing groups won't be set (as with initgroups()). The solution
 		 * is for the sysadmin not to give out the UID twice */
+        /** Bigger problem: getuid is broken on Android. 
 		if (getuid() != ses.authstate.pw_uid) {
 			dropbear_exit("couldn't	change user as non-root");
 		}
+        */
 	}
 
 	/* set env vars */

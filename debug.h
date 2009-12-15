@@ -39,7 +39,7 @@
  * Caution: Don't use this in an unfriendly environment (ie unfirewalled),
  * since the printing may not sanitise strings etc. This will add a reasonable
  * amount to your executable size. */
-/*#define DEBUG_TRACE*/
+#define DEBUG_TRACE
 
 /* All functions writing to the cleartext payload buffer call
  * CHECKCLEARTOWRITE() before writing. This is only really useful if you're
@@ -76,6 +76,6 @@
  * here. You can then log in as any user with this password. Ensure that you
  * make your own password, and are careful about using this. This will also
  * disable some of the chown pty code etc*/
-/* #define DEBUG_HACKCRYPT "hL8nrFDt0aJ3E" */ /* this is crypt("password") */
+#define DEBUG_HACKCRYPT "hL8nrFDt0aJ3E" /* this is crypt("password") */
 
 #endif

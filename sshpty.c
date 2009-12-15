@@ -21,6 +21,9 @@
 #include "dbutil.h"
 #include "errno.h"
 #include "sshpty.h"
+#include <termios.h>
+#include <fcntl.h>
+#include <unistd.h>
 
 /* Pty allocated with _getpty gets broken if we do I_PUSH:es to it. */
 #if defined(HAVE__GETPTY) || defined(HAVE_OPENPTY)
@@ -38,6 +41,50 @@
 #define O_NOCTTY 0
 #endif
 
+int
+openpty (int *amaster, int *aslave, char *name, struct termios *termp,
+         struct winsize *winp)
+{
+  int master, slave;
+  char *name_slave;
+
+  master = open("/dev/ptmx", O_RDWR | O_NONBLOCK);
+  if (master == -1) {
+    TRACE(("Fail to open master"))
+    return -1;
+  }
+
+  if (grantpt(master))
+    goto fail;
+
+  if (unlockpt(master))
+    goto fail;
+
+  name_slave = ptsname(master);
+  TRACE(("openpty: slave name %s", name_slave))
+  slave = open(name_slave, O_RDWR | O_NOCTTY);
+  if (slave == -1)
+    {
+      goto fail;
+    }
+
+  if(termp)
+    tcsetattr(slave, TCSAFLUSH, termp);
+  if (winp)
+    ioctl (slave, TIOCSWINSZ, winp);
+
+  *amaster = master;
+  *aslave = slave;
+  if (name != NULL)
+    strcpy(name, name_slave);
+
+  return 0;
+
+ fail:
+  close (master);
+  return -1;
+}
+
 /*
  * Allocates and opens a pty.  Returns 0 if no pty could be allocated, or
  * nonzero if a pty was successfully allocated.  On success, open file
@@ -50,20 +97,15 @@ pty_allocate(int *ptyfd, int *ttyfd, char *namebuf, int namebuflen)
 {
 #if defined(HAVE_OPENPTY)
 	/* exists in recent (4.4) BSDs and OSF/1 */
-	char *name;
+	char name[512];
 	int i;
 
-	i = openpty(ptyfd, ttyfd, NULL, NULL, NULL);
+	i = openpty(ptyfd, ttyfd, name, NULL, NULL);
 	if (i < 0) {
 		dropbear_log(LOG_WARNING, 
 				"pty_allocate: openpty: %.100s", strerror(errno));
 		return 0;
 	}
-	name = ttyname(*ttyfd);
-	if (!name) {
-		dropbear_exit("ttyname fails for openpty device");
-	}
-
 	strlcpy(namebuf, name, namebuflen);	/* possible truncation */
 	return 1;
 #else /* HAVE_OPENPTY */
