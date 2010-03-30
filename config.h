@@ -23,10 +23,10 @@
 /* #undef CONF_WTMP_FILE */
 
 /* Disable use of lastlog() */
-/* #undef DISABLE_LASTLOG */
+#define DISABLE_LASTLOG 1 
 
 /* Use PAM */
-#define DISABLE_PAM 
+#define DISABLE_PAM 1
 
 /* Disable use of pututline() */
 /* #undef DISABLE_PUTUTLINE */
@@ -44,7 +44,7 @@
 #define DISABLE_UTMPX 1
 
 /* Disable use of wtmp */
-/* #undef DISABLE_WTMP */
+#define DISABLE_WTMP 1
 
 /* Disable use of wtmpx */
 #define DISABLE_WTMPX 1

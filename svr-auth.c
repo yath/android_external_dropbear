@@ -295,10 +295,12 @@ static int checkusername(unsigned char *username, unsigned int userlen) {
 
 	TRACE(("shell is %s", ses.authstate.pw_shell))
 
+#ifndef ANDROID_CHANGES
 	/* check that the shell is set */
 	usershell = ses.authstate.pw_shell;
 	if (usershell[0] == '\0') {
 		/* empty shell in /etc/passwd means /bin/sh according to passwd(5) */
+        usershell = "/system/bin/sh";
 		usershell = "/bin/sh";
 	}
 
@@ -327,6 +329,7 @@ goodshell:
 
 	TRACE(("uid = %d", ses.authstate.pw_uid))
 	TRACE(("leave checkusername"))
+#endif
 	return DROPBEAR_SUCCESS;
 
 }
